@@ -25,14 +25,15 @@ public class MapActivity2 extends FragmentActivity implements
 	private Location lastLocation;
 	private TextView tvMap;
 	private float totalDistance = 0;
+	LocationManager locationManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.activity2_map);
 		tvMap = (TextView) findViewById(R.id.tv_map);
-		
+
 		GooglePlayServicesUtil
 				.isGooglePlayServicesAvailable(getApplicationContext());
 		googleMap = ((SupportMapFragment) getSupportFragmentManager()
@@ -40,12 +41,13 @@ public class MapActivity2 extends FragmentActivity implements
 		googleMap.setMyLocationEnabled(true);
 		googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 		googleMap.setOnMapClickListener(this);
-		
-		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
 		String provider = locationManager.getBestProvider(criteria, true);
 		lastLocation = locationManager.getLastKnownLocation(provider);
-		locationManager.requestLocationUpdates(provider, 500, 0, (LocationListener) this);
+		locationManager.requestLocationUpdates(provider, 500, 0,
+				(LocationListener) this);
 	}
 
 	@Override
